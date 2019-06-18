@@ -11,8 +11,8 @@ pub struct MessageBuilder<'a> {
 impl<'a> MessageBuilder<'a> {
     pub fn new(session: &'a mut Session, frame: Frame) -> Self {
         MessageBuilder {
-            session: session,
-            frame: frame,
+            session,
+            frame,
             receipt_request: None
         }
     }

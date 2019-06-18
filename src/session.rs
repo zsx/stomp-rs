@@ -25,7 +25,7 @@ pub struct OutstandingReceipt {
 impl OutstandingReceipt {
     pub fn new(original_frame: Frame) -> Self {
         OutstandingReceipt {
-            original_frame: original_frame
+            original_frame,
         }
     }
 }
@@ -37,7 +37,7 @@ pub struct ReceiptRequest {
 impl ReceiptRequest {
     pub fn new(id: String) -> Self {
         ReceiptRequest {
-            id: id,
+            id,
         }
     }
 }
