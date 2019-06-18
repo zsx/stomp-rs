@@ -197,63 +197,63 @@ impl HeaderList {
         }
     }
 
-    pub fn get_login<'a>(&'a self) -> Option<Login<'a>> {
+    pub fn get_login(&self) -> Option<Login> {
         match self.get_header("login") {
             Some(h) => Some(Login(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_message_id<'a>(&'a self) -> Option<MessageId<'a>> {
+    pub fn get_message_id(&self) -> Option<MessageId> {
         match self.get_header("message-id") {
             Some(h) => Some(MessageId(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_passcode<'a>(&'a self) -> Option<Passcode<'a>> {
+    pub fn get_passcode(&self) -> Option<Passcode> {
         match self.get_header("passcode") {
             Some(h) => Some(Passcode(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_receipt<'a>(&'a self) -> Option<Receipt<'a>> {
+    pub fn get_receipt(&self) -> Option<Receipt> {
         match self.get_header("receipt") {
             Some(h) => Some(Receipt(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_receipt_id<'a>(&'a self) -> Option<ReceiptId<'a>> {
+    pub fn get_receipt_id(&self) -> Option<ReceiptId> {
         match self.get_header("receipt-id") {
             Some(h) => Some(ReceiptId(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_server<'a>(&'a self) -> Option<Server<'a>> {
+    pub fn get_server(&self) -> Option<Server> {
         match self.get_header("server") {
             Some(h) => Some(Server(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_session<'a>(&'a self) -> Option<Session<'a>> {
+    pub fn get_session(&self) -> Option<Session> {
         match self.get_header("session") {
             Some(h) => Some(Session(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_subscription<'a>(&'a self) -> Option<Subscription<'a>> {
+    pub fn get_subscription(&self) -> Option<Subscription> {
         match self.get_header("subscription") {
             Some(h) => Some(Subscription(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_transaction<'a>(&'a self) -> Option<Transaction<'a>> {
+    pub fn get_transaction(&self) -> Option<Transaction> {
         match self.get_header("transaction") {
             Some(h) => Some(Transaction(h.get_value())),
             None => None,
