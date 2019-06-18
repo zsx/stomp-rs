@@ -42,7 +42,7 @@ impl SessionBuilder {
     }
 
     #[allow(dead_code)]
-    pub fn start<'b, 'c>(self, hdl: Handle) -> ::std::io::Result<Session> {
+    pub fn start(self, hdl: Handle) -> ::std::io::Result<Session> {
         let address = (&self.config.host as &str, self.config.port)
             .to_socket_addrs()?.nth(0)
             .ok_or(io::Error::new(io::ErrorKind::Other, "address provided resolved to nothing"))?;
@@ -50,7 +50,7 @@ impl SessionBuilder {
     }
 
     #[allow(dead_code)]
-    pub fn with<'b, T>(self, option_setter: T) -> SessionBuilder
+    pub fn with<T>(self, option_setter: T) -> SessionBuilder
         where T: OptionSetter<SessionBuilder>
     {
         option_setter.set_option(self)
