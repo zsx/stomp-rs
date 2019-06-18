@@ -1,7 +1,7 @@
 #![crate_name = "stomp"]
 #![crate_type = "lib"]
 
-#![cfg_attr(feature = "cargo-clippy", deny(clippy::needless_lifetimes))]
+#![deny(clippy::needless_lifetimes)]
 
 #[macro_use]
 extern crate log;
