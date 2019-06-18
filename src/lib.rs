@@ -2,6 +2,8 @@
 #![crate_type = "lib"]
 
 #![deny(clippy::needless_lifetimes)]
+#![deny(clippy::extra_unused_lifetimes)]
+
 
 #[macro_use]
 extern crate log;
