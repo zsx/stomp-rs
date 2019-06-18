@@ -3,8 +3,6 @@
 #![deny(clippy::needless_lifetimes)]
 #![deny(clippy::extra_unused_lifetimes)]
 
-#![rustfmt::skip] //rustfmt reorders the module list, which breaks it.
-
 #[macro_use]
 extern crate log;
 extern crate bytes;
@@ -17,6 +15,7 @@ extern crate nom;
 
 pub mod codec;
 pub mod connection;
+#[rustfmt::skip]
 pub mod header; // this must come before frame, because it defines header_list!
 pub mod frame;
 pub mod message_builder;
