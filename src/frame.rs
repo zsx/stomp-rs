@@ -53,23 +53,23 @@ impl fmt::Display for Command {
     }
 }
 pub trait ToFrameBody {
-    fn to_frame_body<'a>(&'a self) -> &'a [u8];
+    fn to_frame_body(&self) -> &[u8];
 }
 
 impl<'b> ToFrameBody for &'b [u8] {
-    fn to_frame_body<'a>(&'a self) -> &'a [u8] {
+    fn to_frame_body(&self) -> &[u8] {
         self
     }
 }
 
-impl<'b> ToFrameBody for &'b str {
-    fn to_frame_body<'a>(&'a self) -> &'a [u8] {
+impl ToFrameBody for &str {
+    fn to_frame_body(&self) -> &[u8] {
         self.as_bytes()
     }
 }
 
 impl ToFrameBody for String {
-    fn to_frame_body<'a>(&'a self) -> &'a [u8] {
+    fn to_frame_body(&self) -> &[u8] {
         let string: &str = self.as_ref();
         string.as_bytes()
     }
