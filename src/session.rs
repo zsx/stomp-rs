@@ -75,22 +75,22 @@ impl Session {
     pub fn send_frame(&mut self, fr: Frame) {
         self.send(Transmission::CompleteFrame(fr))
     }
-    pub fn message<'builder, T: ToFrameBody>(&'builder mut self,
-                                             destination: &str,
-                                             body_convertible: T)
-                                             -> MessageBuilder<'builder> {
+    pub fn message<T: ToFrameBody>(&mut self,
+                                   destination: &str,
+                                   body_convertible: T)
+                                   -> MessageBuilder {
         let send_frame = Frame::send(destination, body_convertible.to_frame_body());
         MessageBuilder::new(self, send_frame)
     }
 
-    pub fn subscription<'builder>(&'builder mut self,
-                                  destination: &str)
-                                  -> SubscriptionBuilder<'builder>
+    pub fn subscription(&mut self,
+                        destination: &str)
+                        -> SubscriptionBuilder
     {
         SubscriptionBuilder::new(self, destination.to_owned())
     }
 
-    pub fn begin_transaction<'b>(&'b mut self) -> Transaction<'b> {
+    pub fn begin_transaction(&mut self) -> Transaction {
         let mut transaction = Transaction::new(self);
         let _ = transaction.begin();
         transaction

@@ -28,7 +28,7 @@ impl HeaderList {
         self.headers.pop()
     }
 
-    pub fn iter<'a>(&'a self) -> Iter<'a, Header> {
+    pub fn iter(&self) -> Iter<Header> {
         self.headers.iter()
     }
 
@@ -86,11 +86,11 @@ impl Header {
         encoded
     }
 
-    pub fn get_key<'a>(&'a self) -> &'a str {
+    pub fn get_key(&self) -> &str {
         &self.0
     }
 
-    pub fn get_value<'a>(&'a self) -> &'a str {
+    pub fn get_value(&self) -> &str {
         &self.1
     }
 }
@@ -127,7 +127,7 @@ pub enum StompVersion {
 }
 
 impl HeaderList {
-    pub fn get_header<'a>(&'a self, key: &str) -> Option<&'a Header> {
+    pub fn get_header(&self, key: &str) -> Option<&Header> {
         self.headers.iter().find(|header| {
             match **header {
                 ref h if h.get_key() == key => true,
@@ -154,14 +154,14 @@ impl HeaderList {
         Some(versions)
     }
 
-    pub fn get_ack<'a>(&'a self) -> Option<Ack<'a>> {
+    pub fn get_ack(&self) -> Option<Ack> {
         match self.get_header("ack") {
             Some(h) => Some(Ack(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_destination<'a>(&'a self) -> Option<Destination<'a>> {
+    pub fn get_destination(&self) -> Option<Destination> {
         match self.get_header("destination") {
             Some(h) => Some(Destination(h.get_value())),
             None => return None,
@@ -183,14 +183,14 @@ impl HeaderList {
         Some(HeartBeat(spec_list[0], spec_list[1]))
     }
 
-    pub fn get_host<'a>(&'a self) -> Option<Host<'a>> {
+    pub fn get_host(&self) -> Option<Host> {
         match self.get_header("host") {
             Some(h) => Some(Host(h.get_value())),
             None => None,
         }
     }
 
-    pub fn get_id<'a>(&'a self) -> Option<Id<'a>> {
+    pub fn get_id(&self) -> Option<Id> {
         match self.get_header("id") {
             Some(h) => Some(Id(h.get_value())),
             None => None,

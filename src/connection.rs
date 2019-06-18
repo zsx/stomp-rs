@@ -16,7 +16,7 @@ pub struct OwnedCredentials {
 }
 
 impl OwnedCredentials {
-    pub fn from<'a>(credentials: Credentials<'a>) -> OwnedCredentials {
+    pub fn from(credentials: Credentials) -> OwnedCredentials {
         OwnedCredentials {
             login: credentials.0.to_owned(),
             passcode: credentials.1.to_owned(),
