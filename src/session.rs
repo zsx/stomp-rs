@@ -182,7 +182,7 @@ impl Session {
             return Ok(());
         }
         let tx_heartbeat_ms = self.state.tx_heartbeat_ms.unwrap();
-        if tx_heartbeat_ms <= 0 {
+        if tx_heartbeat_ms == 0 {
             debug!("Heartbeat transmission ms is {}, no need to register a callback.",
                    tx_heartbeat_ms);
             return Ok(());
@@ -202,7 +202,7 @@ impl Session {
                         of CONNECTED.");
                 0
             });
-        if rx_heartbeat_ms <= 0 {
+        if rx_heartbeat_ms == 0 {
             debug!("Heartbeat receipt ms is {}, no need to register a callback.",
                    rx_heartbeat_ms);
             return Ok(());
