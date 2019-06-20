@@ -174,15 +174,17 @@ impl HeaderList {
             Some(h) => h.get_value(),
             None => return None,
         };
-        let spec_list: Vec<u32> = spec
+        let mut spec_iter = spec
             .split(',')
-            .filter_map(|str_val| str_val.parse::<u32>().ok())
-            .collect();
+            .filter_map(|str_val| str_val.parse::<u32>().ok());
+        let x = spec_iter.next();
+        let y = spec_iter.next();
+        let z = spec_iter.next();
 
-        if spec_list.len() != 2 {
-            return None;
+        match (x, y, z) {
+            (Some(x), Some(y), None) => Some(HeartBeat(x, y)),
+            _ => None
         }
-        Some(HeartBeat(spec_list[0], spec_list[1]))
     }
 
     pub fn get_host(&self) -> Option<Host> {
