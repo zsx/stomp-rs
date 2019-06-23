@@ -111,12 +111,12 @@ impl Decoder for Codec {
 
         trace!("decoding data: {:?}", src);
         let (point, data) = match parse_transmission(src) {
-            IResult::Done(rest, data) => (rest.len(), data),
-            IResult::Error(e) => {
+            Ok((rest, data)) => (rest.len(), data),
+            Err(nom::Err::Incomplete(_)) => return Ok(None),
+            Err(e) => {
                 warn!("parse error: {:?}", e);
                 return Err(Error::new(ErrorKind::Other, format!("parse error: {}", e)));
             }
-            IResult::Incomplete(_) => return Ok(None),
         };
         let len = src.len().saturating_sub(point);
         src.split_to(len);
