@@ -42,10 +42,9 @@ impl SessionBuilder {
         let address = (&self.config.host as &str, self.config.port)
             .to_socket_addrs()?
             .nth(0)
-            .ok_or_else(|| io::Error::new(
-                io::ErrorKind::Other,
-                "address provided resolved to nothing",
-            ))?;
+            .ok_or_else(|| {
+                io::Error::new(io::ErrorKind::Other, "address provided resolved to nothing")
+            })?;
         Ok(Session::new(
             self.config,
             TcpStream::connect(&address, &hdl),
