@@ -99,7 +99,7 @@ fn get_body<'a, 'b>(bytes: &'a [u8], headers: &'b [Header]) -> ::nom::IResult<&'
     } else {
         trace!("using many0 method to parse body");
         map!(bytes, many0!(is_not!("\0")), |body| {
-            if body.len() == 0 {
+            if body.is_empty() {
                 &[]
             } else {
                 body.into_iter().nth(0).unwrap()
@@ -151,7 +151,7 @@ named!(parse_frame2(&[u8]) -> Frame,
 fn parse_transmission(i: &[u8]) -> IResult<&[u8], Transmission> {
     alt((
         map(many1(line_ending), |_| Transmission::HeartBeat),
-        map(parse_frame, |f| Transmission::CompleteFrame(f)),
+        map(parse_frame, Transmission::CompleteFrame),
     ))(i)
 }
 

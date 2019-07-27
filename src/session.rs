@@ -38,6 +38,7 @@ impl ReceiptRequest {
     }
 }
 
+#[derive(Default)]
 pub struct SessionState {
     next_transaction_id: u32,
     next_subscription_id: u32,
@@ -86,13 +87,13 @@ impl Session {
 
     pub fn begin_transaction(&mut self) -> Transaction {
         let mut transaction = Transaction::new(self);
-        let _ = transaction.begin();
+        transaction.begin();
         transaction
     }
 
     pub fn unsubscribe(&mut self, sub_id: &str) {
         self.state.subscriptions.remove(sub_id);
-        let unsubscribe_frame = Frame::unsubscribe(sub_id.as_ref());
+        let unsubscribe_frame = Frame::unsubscribe(sub_id);
         self.send(CompleteFrame(unsubscribe_frame))
     }
 
@@ -108,7 +109,7 @@ impl Session {
         let address = (&self.config.host as &str, self.config.port)
             .to_socket_addrs()?
             .nth(0)
-            .ok_or(io::Error::new(
+            .ok_or_else(|| io::Error::new(
                 io::ErrorKind::Other,
                 "address provided resolved to nothing",
             ))?;
@@ -186,7 +187,7 @@ impl Session {
             );
             return Ok(());
         }
-        let timeout = Timeout::new(Duration::from_millis(tx_heartbeat_ms as _), &self.hdl)?;
+        let timeout = Timeout::new(Duration::from_millis(u64::from(tx_heartbeat_ms)), &self.hdl)?;
         self.state.tx_heartbeat_timeout = Some(timeout);
         Ok(())
     }
@@ -209,7 +210,7 @@ impl Session {
             );
             return Ok(());
         }
-        let timeout = Timeout::new(Duration::from_millis(rx_heartbeat_ms as _), &self.hdl)?;
+        let timeout = Timeout::new(Duration::from_millis(u64::from(rx_heartbeat_ms)), &self.hdl)?;
         self.state.rx_heartbeat_timeout = Some(timeout);
         Ok(())
     }
@@ -478,7 +479,7 @@ impl Stream for Session {
 
         self.poll_stream_complete();
 
-        if self.events.len() > 0 {
+        if !self.events.is_empty() {
             if self.events.len() > 1 {
                 // make sure we get polled again, so we can get rid of our other events
                 task::current().notify();

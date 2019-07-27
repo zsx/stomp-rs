@@ -15,8 +15,8 @@ pub struct SubscriptionBuilder<'a> {
 impl<'a> SubscriptionBuilder<'a> {
     pub fn new(session: &'a mut Session, destination: String) -> Self {
         SubscriptionBuilder {
-            session: session,
-            destination: destination,
+            session,
+            destination,
             ack_mode: AckMode::Auto,
             headers: HeaderList::new(),
             receipt_request: None,

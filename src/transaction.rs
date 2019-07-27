@@ -13,7 +13,7 @@ impl<'tx> Transaction<'tx> {
     pub fn new(session: &'tx mut Session) -> Transaction<'tx> {
         Transaction {
             id: format!("tx/{}", session.generate_transaction_id()),
-            session: session,
+            session,
         }
     }
 

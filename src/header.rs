@@ -7,7 +7,7 @@ use unicode_segmentation::UnicodeSegmentation;
 // Ideally this would be a simple typedef. However:
 // See Rust bug #11047: https://github.com/mozilla/rust/issues/11047
 // Cannot call static methods (`with_capacity`) on type aliases (`HeaderList`)
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct HeaderList {
     pub headers: Vec<Header>,
 }
@@ -165,7 +165,7 @@ impl HeaderList {
     pub fn get_destination(&self) -> Option<Destination> {
         match self.get_header("destination") {
             Some(h) => Some(Destination(h.get_value())),
-            None => return None,
+            None => None,
         }
     }
 
@@ -269,7 +269,7 @@ impl HeaderList {
             Some(h) => h.get_value(),
             None => return None,
         };
-        match (version).as_ref() {
+        match version {
             "1.0" => Some(Version(StompVersion::Stomp_v1_0)), // TODO: Impl FromStr for StompVersion
             "1.1" => Some(Version(StompVersion::Stomp_v1_1)),
             "1.2" => Some(Version(StompVersion::Stomp_v1_2)),

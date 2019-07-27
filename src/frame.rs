@@ -25,10 +25,10 @@ pub enum Command {
     Error,
 }
 impl Command {
-    pub fn as_str(&self) -> &'static str {
+    pub fn as_str(self) -> &'static str {
         use self::Command::*;
 
-        match *self {
+        match self {
             Send => "SEND",
             Subscribe => "SUBSCRIBE",
             Unsubscribe => "UNSUBSCRIBE",
@@ -154,7 +154,7 @@ impl Frame {
 
     pub fn connect(tx_heartbeat_ms: u32, rx_heartbeat_ms: u32) -> Frame {
         let heart_beat = format!("{},{}", tx_heartbeat_ms, rx_heartbeat_ms);
-        let connect_frame = Frame {
+        Frame {
             command: Command::Connect,
             headers: header_list![
                 "accept-version" => "1.2",
@@ -162,23 +162,21 @@ impl Frame {
                 "content-length" => "0"
             ],
             body: Vec::new(),
-        };
-        connect_frame
+        }
     }
 
     pub fn disconnect() -> Frame {
-        let disconnect_frame = Frame {
+        Frame {
             command: Command::Disconnect,
             headers: header_list![
                 "receipt" => "msg/disconnect"
             ],
             body: Vec::new(),
-        };
-        disconnect_frame
+        }
     }
 
     pub fn subscribe(subscription_id: &str, destination: &str, ack_mode: AckMode) -> Frame {
-        let subscribe_frame = Frame {
+        Frame {
             command: Command::Subscribe,
             headers: header_list![
                 "destination" => destination,
@@ -186,85 +184,77 @@ impl Frame {
                 "ack" => ack_mode.as_text()
             ],
             body: Vec::new(),
-        };
-        subscribe_frame
+        }
     }
 
     pub fn unsubscribe(subscription_id: &str) -> Frame {
-        let unsubscribe_frame = Frame {
+        Frame {
             command: Command::Unsubscribe,
             headers: header_list![
                 "id" => subscription_id
             ],
             body: Vec::new(),
-        };
-        unsubscribe_frame
+        }
     }
 
     pub fn ack(ack_id: &str) -> Frame {
-        let ack_frame = Frame {
+        Frame {
             command: Command::Ack,
             headers: header_list![
                 "id" => ack_id
             ],
             body: Vec::new(),
-        };
-        ack_frame
+        }
     }
 
     pub fn nack(message_id: &str) -> Frame {
-        let nack_frame = Frame {
+        Frame {
             command: Command::Nack,
             headers: header_list![
                 "id" => message_id
             ],
             body: Vec::new(),
-        };
-        nack_frame
+        }
     }
 
     pub fn send(destination: &str, body: &[u8]) -> Frame {
-        let send_frame = Frame {
+        Frame {
             command: Command::Send,
             headers: header_list![
                 "destination" => destination,
                 "content-length" => body.len().to_string().as_ref()
             ],
             body: body.into(),
-        };
-        send_frame
+        }
     }
 
     pub fn begin(transaction_id: &str) -> Frame {
-        let begin_frame = Frame {
+        Frame {
             command: Command::Begin,
             headers: header_list![
                 "transaction" => transaction_id
             ],
             body: Vec::new(),
-        };
-        begin_frame
+        }
     }
 
     pub fn abort(transaction_id: &str) -> Frame {
-        let abort_frame = Frame {
+        Frame {
             command: Command::Abort,
             headers: header_list![
                 "transaction" => transaction_id
             ],
             body: Vec::new(),
-        };
-        abort_frame
+        }
     }
 
     pub fn commit(transaction_id: &str) -> Frame {
-        let commit_frame = Frame {
+        Frame {
             command: Command::Commit,
             headers: header_list![
                 "transaction" => transaction_id
             ],
             body: Vec::new(),
-        };
-        commit_frame
+        }
     }
 }

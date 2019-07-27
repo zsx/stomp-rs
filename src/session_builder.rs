@@ -42,7 +42,7 @@ impl SessionBuilder {
         let address = (&self.config.host as &str, self.config.port)
             .to_socket_addrs()?
             .nth(0)
-            .ok_or(io::Error::new(
+            .ok_or_else(|| io::Error::new(
                 io::ErrorKind::Other,
                 "address provided resolved to nothing",
             ))?;
