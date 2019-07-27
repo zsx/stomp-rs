@@ -16,6 +16,7 @@ log = "0.3"
 nom = "5.0"
 tokio-core = "0.1"
 tokio-io = "0.1"
+tokio = "0.1.22"
 unicode-segmentation = "0.1"
 
 [lib]

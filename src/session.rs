@@ -1,20 +1,20 @@
-use codec::Codec;
-use connection::{self, Connection};
-use frame::Transmission::{self, CompleteFrame, HeartBeat};
-use frame::{Command, Frame, ToFrameBody};
+use crate::codec::Codec;
+use crate::connection::{self, Connection};
+use crate::frame::Transmission::{self, CompleteFrame, HeartBeat};
+use crate::frame::{Command, Frame, ToFrameBody};
 use futures::*;
-use header::{self, Header};
-use message_builder::MessageBuilder;
-use session_builder::SessionConfig;
+use crate::header::{self, Header};
+use crate::message_builder::MessageBuilder;
+use crate::session_builder::SessionConfig;
 use std::collections::hash_map::HashMap;
 use std::io::Result;
-use subscription::{AckMode, AckOrNack, Subscription};
-use subscription_builder::SubscriptionBuilder;
+use crate::subscription::{AckMode, AckOrNack, Subscription};
+use crate::subscription_builder::SubscriptionBuilder;
 use tokio_core::net::{TcpStream, TcpStreamNew};
 use tokio_core::reactor::{Handle, Timeout};
 use tokio::codec::Framed;
-use tokio_io::AsyncRead;
-use transaction::Transaction;
+
+use crate::transaction::Transaction;
 
 const GRACE_PERIOD_MULTIPLIER: f32 = 2.0;
 
@@ -247,7 +247,7 @@ impl Session {
                     "Using provided credentials: login '{}', passcode '{}'",
                     credentials.login, credentials.passcode
                 );
-                let mut headers = &mut self.config.headers;
+                let headers = &mut self.config.headers;
                 headers.push(Header::new("login", &credentials.login));
                 headers.push(Header::new("passcode", &credentials.passcode));
             }
@@ -432,7 +432,7 @@ impl Stream for Session {
     type Error = ::std::io::Error;
 
     fn poll(&mut self) -> Poll<Option<Self::Item>, Self::Error> {
-        use frame::Transmission::*;
+        use crate::frame::Transmission::*;
 
         while let Async::Ready(Some(val)) = self.poll_stream() {
             match val {

@@ -1,8 +1,8 @@
-use frame::Frame;
-use header::HeaderList;
-use option_setter::OptionSetter;
-use session::{OutstandingReceipt, ReceiptRequest, Session};
-use subscription::{AckMode, Subscription};
+use crate::frame::Frame;
+use crate::header::HeaderList;
+use crate::option_setter::OptionSetter;
+use crate::session::{OutstandingReceipt, ReceiptRequest, Session};
+use crate::subscription::{AckMode, Subscription};
 
 pub struct SubscriptionBuilder<'a> {
     pub session: &'a mut Session,

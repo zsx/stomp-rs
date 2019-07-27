@@ -1,8 +1,8 @@
-use connection::{HeartBeat, OwnedCredentials};
-use header::{Header, HeaderList};
-use option_setter::OptionSetter;
+use crate::connection::{HeartBeat, OwnedCredentials};
+use crate::header::{Header, HeaderList};
+use crate::option_setter::OptionSetter;
 
-use session::Session;
+use crate::session::Session;
 use std::io;
 use std::net::ToSocketAddrs;
 use tokio_core::net::TcpStream;
