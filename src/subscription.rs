@@ -35,8 +35,8 @@ impl Subscription {
         Subscription {
             id: format!("stomp-rs/{}", id),
             destination: destination.to_string(),
-            ack_mode: ack_mode,
-            headers: headers,
+            ack_mode,
+            headers,
         }
     }
 }

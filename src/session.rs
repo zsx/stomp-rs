@@ -12,7 +12,7 @@ use subscription::{AckMode, AckOrNack, Subscription};
 use subscription_builder::SubscriptionBuilder;
 use tokio_core::net::{TcpStream, TcpStreamNew};
 use tokio_core::reactor::{Handle, Timeout};
-use tokio_io::codec::Framed;
+use tokio::codec::Framed;
 use tokio_io::AsyncRead;
 use transaction::Transaction;
 
@@ -369,7 +369,7 @@ impl Session {
                 },
                 Connecting(mut tsn) => match tsn.poll() {
                     Ok(Async::Ready(s)) => {
-                        let fr = s.framed(Codec);
+                        let fr = Framed::new(s, Codec);
                         self.stream = Connected(fr);
                         self.on_stream_ready();
                     }

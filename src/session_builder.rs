@@ -25,7 +25,7 @@ impl SessionBuilder {
     pub fn new(host: &str, port: u16) -> SessionBuilder {
         let config = SessionConfig {
             host: host.to_owned(),
-            port: port,
+            port,
             credentials: None,
             heartbeat: HeartBeat(0, 0),
             headers: header_list![
@@ -34,7 +34,7 @@ impl SessionBuilder {
              "content-length" => "0"
             ],
         };
-        SessionBuilder { config: config }
+        SessionBuilder { config }
     }
 
     #[allow(dead_code)]
