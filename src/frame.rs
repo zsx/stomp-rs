@@ -1,10 +1,10 @@
-use bytes::BytesMut;
 use crate::header::Header;
 use crate::header::HeaderList;
+use crate::subscription::AckMode;
+use bytes::BytesMut;
 use std::fmt;
 use std::fmt::Formatter;
 use std::str::from_utf8;
-use crate::subscription::AckMode;
 
 #[derive(Copy, Clone, Debug)]
 pub enum Command {

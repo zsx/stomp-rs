@@ -2,17 +2,17 @@ use crate::codec::Codec;
 use crate::connection::{self, Connection};
 use crate::frame::Transmission::{self, CompleteFrame, HeartBeat};
 use crate::frame::{Command, Frame, ToFrameBody};
-use futures::*;
 use crate::header::{self, Header};
 use crate::message_builder::MessageBuilder;
 use crate::session_builder::SessionConfig;
-use std::collections::hash_map::HashMap;
-use std::io::Result;
 use crate::subscription::{AckMode, AckOrNack, Subscription};
 use crate::subscription_builder::SubscriptionBuilder;
+use futures::*;
+use std::collections::hash_map::HashMap;
+use std::io::Result;
+use tokio::codec::Framed;
 use tokio_core::net::{TcpStream, TcpStreamNew};
 use tokio_core::reactor::{Handle, Timeout};
-use tokio::codec::Framed;
 
 use crate::transaction::Transaction;
 
